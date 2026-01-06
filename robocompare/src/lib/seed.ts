@@ -10,197 +10,207 @@ if (!MONGODB_URI) {
   process.exit(1)
 }
 
-// 品类数据
+// 品类数据 - 参考图中的品类
 const categories = [
   {
-    name: '人形机器人',
-    nameEn: 'Humanoid Robot',
+    name: 'Humanoid',
+    nameEn: 'Humanoid',
     slug: 'humanoid',
     icon: '🤖',
-    description: '双足直立行走的类人机器人，具有类似人类的外形和运动能力',
-    descriptionEn: 'Bipedal robots with human-like appearance and movement capabilities',
+    description: '人形机器人 - 双足直立行走的类人机器人',
+    descriptionEn: 'Bipedal robots with human-like appearance',
     order: 1,
     isActive: true,
     productCount: 0,
   },
   {
-    name: '四足机器狗',
-    nameEn: 'Quadruped Robot',
-    slug: 'quadruped',
-    icon: '🐕',
-    description: '四足行走的仿生机器人，具有优秀的地形适应能力',
-    descriptionEn: 'Four-legged robots with excellent terrain adaptability',
+    name: 'Wheeled',
+    nameEn: 'Wheeled',
+    slug: 'wheeled',
+    icon: '🚗',
+    description: '轮式机器人',
+    descriptionEn: 'Wheeled robots',
     order: 2,
     isActive: true,
     productCount: 0,
   },
   {
-    name: '灵巧手',
-    nameEn: 'Dexterous Hand',
-    slug: 'dexterous-hand',
-    icon: '✋',
-    description: '高自由度仿人机械手，用于精细操作和抓取任务',
-    descriptionEn: 'High-DOF robotic hands for fine manipulation and grasping tasks',
+    name: 'Dog',
+    nameEn: 'Dog',
+    slug: 'dog',
+    icon: '🐕',
+    description: '四足机器狗',
+    descriptionEn: 'Quadruped robot dogs',
     order: 3,
+    isActive: true,
+    productCount: 0,
+  },
+  {
+    name: 'Vacuum',
+    nameEn: 'Vacuum',
+    slug: 'vacuum',
+    icon: '🧹',
+    description: '扫地机器人',
+    descriptionEn: 'Vacuum robots',
+    order: 4,
+    isActive: true,
+    productCount: 0,
+  },
+  {
+    name: 'Pool Cleaner',
+    nameEn: 'Pool Cleaner',
+    slug: 'pool-cleaner',
+    icon: '🏊',
+    description: '泳池清洁机器人',
+    descriptionEn: 'Pool cleaning robots',
+    order: 5,
+    isActive: true,
+    productCount: 0,
+  },
+  {
+    name: 'Lawn Mower',
+    nameEn: 'Lawn Mower',
+    slug: 'lawn-mower',
+    icon: '🌱',
+    description: '割草机器人',
+    descriptionEn: 'Lawn mowing robots',
+    order: 6,
+    isActive: true,
+    productCount: 0,
+  },
+  {
+    name: 'Companion',
+    nameEn: 'Companion',
+    slug: 'companion',
+    icon: '🤝',
+    description: '陪伴机器人',
+    descriptionEn: 'Companion robots',
+    order: 7,
+    isActive: true,
+    productCount: 0,
+  },
+  {
+    name: 'Industry',
+    nameEn: 'Industry',
+    slug: 'industry',
+    icon: '🏭',
+    description: '工业机器人',
+    descriptionEn: 'Industrial robots',
+    order: 8,
+    isActive: true,
+    productCount: 0,
+  },
+  {
+    name: 'Drone',
+    nameEn: 'Drone',
+    slug: 'drone',
+    icon: '🚁',
+    description: '无人机',
+    descriptionEn: 'Drones',
+    order: 9,
+    isActive: true,
+    productCount: 0,
+  },
+  {
+    name: 'Others',
+    nameEn: 'Others',
+    slug: 'others',
+    icon: '📦',
+    description: '其他机器人',
+    descriptionEn: 'Other robots',
+    order: 10,
     isActive: true,
     productCount: 0,
   },
 ]
 
-// 人形机器人模板
+// 人形机器人模板 - 参考图中的参数组
 const humanoidTemplate = {
-  name: '人形机器人参数模板',
+  name: 'Humanoid Robot Template',
   nameEn: 'Humanoid Robot Template',
   groups: [
     {
-      name: '基本信息',
-      nameEn: 'Basic Information',
-      key: 'basic',
+      name: 'Overview',
+      nameEn: 'Overview',
+      key: 'overview',
       order: 1,
       fields: [
-        { name: '产品状态', nameEn: 'Product Status', key: 'product_status', type: 'select', options: ['在售', '停产', '预售', '概念'], required: false, compareRule: 'none', order: 1 },
-        { name: '发布日期', nameEn: 'Release Date', key: 'release_date', type: 'date', required: false, compareRule: 'none', order: 2 },
-        { name: '官方售价', nameEn: 'Official Price', key: 'price', type: 'number', unit: '元', unitEn: 'CNY', required: false, compareRule: 'lower_better', order: 3 },
-        { name: '官网链接', nameEn: 'Official Website', key: 'website', type: 'url', required: false, compareRule: 'none', order: 4 },
+        { name: 'Height', nameEn: 'Height', key: 'height', type: 'number', unit: 'meters', unitEn: 'meters', required: false, compareRule: 'none', order: 1 },
+        { name: 'Weight', nameEn: 'Weight', key: 'weight', type: 'number', unit: 'pounds', unitEn: 'pounds', required: false, compareRule: 'lower_better', order: 2 },
+        { name: 'Horizontal reach', nameEn: 'Horizontal reach', key: 'horizontal_reach', type: 'number', unit: 'meters', unitEn: 'meters', required: false, compareRule: 'higher_better', order: 3 },
+        { name: 'Vertical reach', nameEn: 'Vertical reach', key: 'vertical_reach', type: 'number', unit: 'meters', unitEn: 'meters', required: false, compareRule: 'higher_better', order: 4 },
       ],
     },
     {
-      name: '物理规格',
-      nameEn: 'Physical Specifications',
-      key: 'physical',
+      name: 'Degrees of Freedom',
+      nameEn: 'Degrees of Freedom',
+      key: 'dof',
       order: 2,
       fields: [
-        { name: '身高', nameEn: 'Height', key: 'height', type: 'number', unit: 'mm', unitEn: 'mm', required: false, compareRule: 'none', order: 1 },
-        { name: '体重', nameEn: 'Weight', key: 'weight', type: 'number', unit: 'kg', unitEn: 'kg', required: false, compareRule: 'lower_better', order: 2 },
-        { name: '臂展', nameEn: 'Arm Span', key: 'arm_span', type: 'number', unit: 'mm', unitEn: 'mm', required: false, compareRule: 'none', order: 3 },
-        { name: '全身自由度', nameEn: 'Total DOF', key: 'total_dof', type: 'number', unit: '个', unitEn: 'DOF', required: false, compareRule: 'higher_better', order: 4 },
-        { name: '头部自由度', nameEn: 'Head DOF', key: 'head_dof', type: 'number', unit: '个', unitEn: 'DOF', required: false, compareRule: 'higher_better', order: 5 },
-        { name: '单臂自由度', nameEn: 'Arm DOF', key: 'arm_dof', type: 'number', unit: '个', unitEn: 'DOF', required: false, compareRule: 'higher_better', order: 6 },
-        { name: '单手自由度', nameEn: 'Hand DOF', key: 'hand_dof', type: 'number', unit: '个', unitEn: 'DOF', required: false, compareRule: 'higher_better', order: 7 },
-        { name: '腰部自由度', nameEn: 'Waist DOF', key: 'waist_dof', type: 'number', unit: '个', unitEn: 'DOF', required: false, compareRule: 'higher_better', order: 8 },
-        { name: '单腿自由度', nameEn: 'Leg DOF', key: 'leg_dof', type: 'number', unit: '个', unitEn: 'DOF', required: false, compareRule: 'higher_better', order: 9 },
-        { name: '防护等级', nameEn: 'IP Rating', key: 'ip_rating', type: 'text', required: false, compareRule: 'none', order: 10 },
+        { name: 'Arms', nameEn: 'Arms', key: 'arms_dof', type: 'text', required: false, compareRule: 'none', order: 1 },
+        { name: 'Hands', nameEn: 'Hands', key: 'hands_dof', type: 'text', required: false, compareRule: 'none', order: 2 },
+        { name: 'Torso', nameEn: 'Torso', key: 'torso_dof', type: 'number', required: false, compareRule: 'higher_better', order: 3 },
+        { name: 'Lower Body', nameEn: 'Lower Body', key: 'lower_body_dof', type: 'number', required: false, compareRule: 'higher_better', order: 4 },
       ],
     },
     {
-      name: '性能参数',
-      nameEn: 'Performance',
-      key: 'performance',
+      name: 'Speed',
+      nameEn: 'Speed',
+      key: 'speed',
       order: 3,
       fields: [
-        { name: '最大负载', nameEn: 'Max Payload', key: 'max_payload', type: 'number', unit: 'kg', unitEn: 'kg', required: false, compareRule: 'higher_better', order: 1 },
-        { name: '单臂负载', nameEn: 'Arm Payload', key: 'arm_payload', type: 'number', unit: 'kg', unitEn: 'kg', required: false, compareRule: 'higher_better', order: 2 },
-        { name: '行走速度', nameEn: 'Walking Speed', key: 'walking_speed', type: 'number', unit: 'm/s', unitEn: 'm/s', required: false, compareRule: 'higher_better', order: 3 },
-        { name: '奔跑速度', nameEn: 'Running Speed', key: 'running_speed', type: 'number', unit: 'm/s', unitEn: 'm/s', required: false, compareRule: 'higher_better', order: 4 },
-        { name: '电池容量', nameEn: 'Battery Capacity', key: 'battery_capacity', type: 'number', unit: 'Wh', unitEn: 'Wh', required: false, compareRule: 'higher_better', order: 5 },
-        { name: '续航时间', nameEn: 'Battery Life', key: 'battery_life', type: 'number', unit: '分钟', unitEn: 'min', required: false, compareRule: 'higher_better', order: 6 },
-        { name: '充电时间', nameEn: 'Charging Time', key: 'charging_time', type: 'number', unit: '分钟', unitEn: 'min', required: false, compareRule: 'lower_better', order: 7 },
+        { name: 'Navigation Max', nameEn: 'Navigation Max', key: 'navigation_max', type: 'number', unit: 'meter/s', unitEn: 'meter/s', required: false, compareRule: 'higher_better', order: 1 },
       ],
     },
     {
-      name: '智能功能',
-      nameEn: 'Intelligence',
-      key: 'intelligence',
+      name: 'Battery',
+      nameEn: 'Battery',
+      key: 'battery',
       order: 4,
       fields: [
-        { name: '传感器类型', nameEn: 'Sensors', key: 'sensors', type: 'textarea', required: false, compareRule: 'none', order: 1 },
-        { name: '视觉系统', nameEn: 'Vision System', key: 'vision_system', type: 'textarea', required: false, compareRule: 'none', order: 2 },
-        { name: '语音交互', nameEn: 'Voice Interaction', key: 'voice_interaction', type: 'text', required: false, compareRule: 'none', order: 3 },
-        { name: 'AI芯片', nameEn: 'AI Chip', key: 'ai_chip', type: 'text', required: false, compareRule: 'none', order: 4 },
-        { name: '操作系统', nameEn: 'Operating System', key: 'operating_system', type: 'text', required: false, compareRule: 'none', order: 5 },
+        { name: 'Runtime', nameEn: 'Runtime', key: 'runtime', type: 'number', unit: 'hours', unitEn: 'hours', required: false, compareRule: 'higher_better', order: 1 },
+        { name: 'Charge time', nameEn: 'Charge time', key: 'charge_time', type: 'number', unit: 'hour', unitEn: 'hour', required: false, compareRule: 'lower_better', order: 2 },
+      ],
+    },
+    {
+      name: 'Ingress Protection',
+      nameEn: 'Ingress Protection',
+      key: 'ip',
+      order: 5,
+      fields: [
+        { name: 'Hand', nameEn: 'Hand', key: 'hand_ip', type: 'text', required: false, compareRule: 'none', order: 1 },
+        { name: 'Lower Arm', nameEn: 'Lower Arm', key: 'lower_arm_ip', type: 'text', required: false, compareRule: 'none', order: 2 },
       ],
     },
   ],
 }
 
 // 四足机器狗模板
-const quadrupedTemplate = {
-  name: '四足机器狗参数模板',
-  nameEn: 'Quadruped Robot Template',
+const dogTemplate = {
+  name: 'Robot Dog Template',
+  nameEn: 'Robot Dog Template',
   groups: [
     {
-      name: '基本信息',
-      nameEn: 'Basic Information',
-      key: 'basic',
+      name: 'Overview',
+      nameEn: 'Overview',
+      key: 'overview',
       order: 1,
       fields: [
-        { name: '产品状态', nameEn: 'Product Status', key: 'product_status', type: 'select', options: ['在售', '停产', '预售'], required: false, compareRule: 'none', order: 1 },
-        { name: '发布日期', nameEn: 'Release Date', key: 'release_date', type: 'date', required: false, compareRule: 'none', order: 2 },
-        { name: '官方售价', nameEn: 'Official Price', key: 'price', type: 'number', unit: '元', unitEn: 'CNY', required: false, compareRule: 'lower_better', order: 3 },
+        { name: 'Length', nameEn: 'Length', key: 'length', type: 'number', unit: 'mm', unitEn: 'mm', required: false, compareRule: 'none', order: 1 },
+        { name: 'Width', nameEn: 'Width', key: 'width', type: 'number', unit: 'mm', unitEn: 'mm', required: false, compareRule: 'none', order: 2 },
+        { name: 'Height', nameEn: 'Height', key: 'height', type: 'number', unit: 'mm', unitEn: 'mm', required: false, compareRule: 'none', order: 3 },
+        { name: 'Weight', nameEn: 'Weight', key: 'weight', type: 'number', unit: 'kg', unitEn: 'kg', required: false, compareRule: 'lower_better', order: 4 },
       ],
     },
     {
-      name: '物理规格',
-      nameEn: 'Physical Specifications',
-      key: 'physical',
-      order: 2,
-      fields: [
-        { name: '站立长度', nameEn: 'Standing Length', key: 'length', type: 'number', unit: 'mm', unitEn: 'mm', required: false, compareRule: 'none', order: 1 },
-        { name: '站立宽度', nameEn: 'Standing Width', key: 'width', type: 'number', unit: 'mm', unitEn: 'mm', required: false, compareRule: 'none', order: 2 },
-        { name: '站立高度', nameEn: 'Standing Height', key: 'height', type: 'number', unit: 'mm', unitEn: 'mm', required: false, compareRule: 'none', order: 3 },
-        { name: '体重', nameEn: 'Weight', key: 'weight', type: 'number', unit: 'kg', unitEn: 'kg', required: false, compareRule: 'lower_better', order: 4 },
-        { name: '单腿自由度', nameEn: 'Leg DOF', key: 'leg_dof', type: 'number', unit: '个', unitEn: 'DOF', required: false, compareRule: 'higher_better', order: 5 },
-        { name: '防护等级', nameEn: 'IP Rating', key: 'ip_rating', type: 'text', required: false, compareRule: 'none', order: 6 },
-      ],
-    },
-    {
-      name: '性能参数',
+      name: 'Performance',
       nameEn: 'Performance',
       key: 'performance',
-      order: 3,
-      fields: [
-        { name: '最大负载', nameEn: 'Max Payload', key: 'max_payload', type: 'number', unit: 'kg', unitEn: 'kg', required: false, compareRule: 'higher_better', order: 1 },
-        { name: '最大速度', nameEn: 'Max Speed', key: 'max_speed', type: 'number', unit: 'm/s', unitEn: 'm/s', required: false, compareRule: 'higher_better', order: 2 },
-        { name: '最大坡度', nameEn: 'Max Slope', key: 'max_slope', type: 'number', unit: '°', unitEn: '°', required: false, compareRule: 'higher_better', order: 3 },
-        { name: '最大台阶', nameEn: 'Max Step Height', key: 'max_step', type: 'number', unit: 'mm', unitEn: 'mm', required: false, compareRule: 'higher_better', order: 4 },
-        { name: '续航时间', nameEn: 'Battery Life', key: 'battery_life', type: 'number', unit: '分钟', unitEn: 'min', required: false, compareRule: 'higher_better', order: 5 },
-      ],
-    },
-  ],
-}
-
-// 灵巧手模板
-const dexterousHandTemplate = {
-  name: '灵巧手参数模板',
-  nameEn: 'Dexterous Hand Template',
-  groups: [
-    {
-      name: '基本信息',
-      nameEn: 'Basic Information',
-      key: 'basic',
-      order: 1,
-      fields: [
-        { name: '产品状态', nameEn: 'Product Status', key: 'product_status', type: 'select', options: ['在售', '停产', '预售'], required: false, compareRule: 'none', order: 1 },
-        { name: '发布日期', nameEn: 'Release Date', key: 'release_date', type: 'date', required: false, compareRule: 'none', order: 2 },
-        { name: '官方售价', nameEn: 'Official Price', key: 'price', type: 'number', unit: '元', unitEn: 'CNY', required: false, compareRule: 'lower_better', order: 3 },
-        { name: '手型', nameEn: 'Hand Type', key: 'hand_type', type: 'select', options: ['左手', '右手', '通用'], required: false, compareRule: 'none', order: 4 },
-      ],
-    },
-    {
-      name: '物理规格',
-      nameEn: 'Physical Specifications',
-      key: 'physical',
       order: 2,
       fields: [
-        { name: '手指数量', nameEn: 'Number of Fingers', key: 'finger_count', type: 'number', unit: '个', unitEn: '', required: false, compareRule: 'higher_better', order: 1 },
-        { name: '总自由度', nameEn: 'Total DOF', key: 'total_dof', type: 'number', unit: '个', unitEn: 'DOF', required: false, compareRule: 'higher_better', order: 2 },
-        { name: '主动自由度', nameEn: 'Active DOF', key: 'active_dof', type: 'number', unit: '个', unitEn: 'DOF', required: false, compareRule: 'higher_better', order: 3 },
-        { name: '重量', nameEn: 'Weight', key: 'weight', type: 'number', unit: 'g', unitEn: 'g', required: false, compareRule: 'lower_better', order: 4 },
-        { name: '手掌长度', nameEn: 'Palm Length', key: 'palm_length', type: 'number', unit: 'mm', unitEn: 'mm', required: false, compareRule: 'none', order: 5 },
-        { name: '手掌宽度', nameEn: 'Palm Width', key: 'palm_width', type: 'number', unit: 'mm', unitEn: 'mm', required: false, compareRule: 'none', order: 6 },
-      ],
-    },
-    {
-      name: '性能参数',
-      nameEn: 'Performance',
-      key: 'performance',
-      order: 3,
-      fields: [
-        { name: '单指力', nameEn: 'Finger Force', key: 'finger_force', type: 'number', unit: 'N', unitEn: 'N', required: false, compareRule: 'higher_better', order: 1 },
-        { name: '抓握力', nameEn: 'Grip Force', key: 'grip_force', type: 'number', unit: 'N', unitEn: 'N', required: false, compareRule: 'higher_better', order: 2 },
-        { name: '最大抓握直径', nameEn: 'Max Grip Diameter', key: 'max_grip_diameter', type: 'number', unit: 'mm', unitEn: 'mm', required: false, compareRule: 'higher_better', order: 3 },
-        { name: '通信接口', nameEn: 'Communication', key: 'communication', type: 'text', required: false, compareRule: 'none', order: 4 },
-        { name: '驱动方式', nameEn: 'Actuation', key: 'actuation', type: 'text', required: false, compareRule: 'none', order: 5 },
+        { name: 'Max Speed', nameEn: 'Max Speed', key: 'max_speed', type: 'number', unit: 'm/s', unitEn: 'm/s', required: false, compareRule: 'higher_better', order: 1 },
+        { name: 'Max Payload', nameEn: 'Max Payload', key: 'max_payload', type: 'number', unit: 'kg', unitEn: 'kg', required: false, compareRule: 'higher_better', order: 2 },
+        { name: 'Runtime', nameEn: 'Runtime', key: 'runtime', type: 'number', unit: 'min', unitEn: 'min', required: false, compareRule: 'higher_better', order: 3 },
       ],
     },
   ],
@@ -250,6 +260,164 @@ const TemplateSchema = new mongoose.Schema({
   groups: [TemplateGroupSchema],
 }, { timestamps: true })
 
+// 示例产品数据
+const sampleProducts = [
+  // Sunday Robotics Memo
+  {
+    name: 'Memo',
+    nameEn: 'Memo',
+    brand: 'Sunday Robotics',
+    model: 'Memo',
+    slug: 'sunday-robotics-memo',
+    status: 'published',
+    params: [
+      { fieldKey: 'height', value: '1.7' },
+      { fieldKey: 'weight', value: '170' },
+      { fieldKey: 'horizontal_reach', value: '0.8' },
+      { fieldKey: 'vertical_reach', value: '2.1' },
+      { fieldKey: 'arms_dof', value: '2 x 7' },
+      { fieldKey: 'hands_dof', value: '2 x4' },
+      { fieldKey: 'torso_dof', value: '1' },
+      { fieldKey: 'lower_body_dof', value: '4' },
+      { fieldKey: 'navigation_max', value: '1' },
+      { fieldKey: 'runtime', value: '4' },
+      { fieldKey: 'charge_time', value: '1' },
+      { fieldKey: 'hand_ip', value: 'IP67' },
+      { fieldKey: 'lower_arm_ip', value: 'IP66' },
+    ],
+  },
+  // 1X Robotics Neo
+  {
+    name: 'Neo',
+    nameEn: 'Neo',
+    brand: '1X Robotics',
+    model: 'Neo',
+    slug: '1x-robotics-neo',
+    status: 'published',
+    params: [
+      { fieldKey: 'height', value: '1.7' },
+      { fieldKey: 'weight', value: '170' },
+      { fieldKey: 'horizontal_reach', value: '0.8' },
+      { fieldKey: 'vertical_reach', value: '2.1' },
+      { fieldKey: 'arms_dof', value: '2 x 7' },
+      { fieldKey: 'hands_dof', value: '2 x4' },
+      { fieldKey: 'torso_dof', value: '1' },
+      { fieldKey: 'lower_body_dof', value: '4' },
+      { fieldKey: 'navigation_max', value: '1' },
+      { fieldKey: 'runtime', value: '4' },
+      { fieldKey: 'charge_time', value: '1' },
+      { fieldKey: 'hand_ip', value: 'IP67' },
+      { fieldKey: 'lower_arm_ip', value: 'IP66' },
+    ],
+  },
+  // Tesla Optimus
+  {
+    name: 'Optimus',
+    nameEn: 'Optimus',
+    brand: 'Tesla',
+    model: 'Optimus',
+    slug: 'tesla-optimus',
+    status: 'published',
+    params: [
+      { fieldKey: 'height', value: '1.7' },
+      { fieldKey: 'weight', value: '170' },
+      { fieldKey: 'horizontal_reach', value: '0.8' },
+      { fieldKey: 'vertical_reach', value: '2.1' },
+      { fieldKey: 'arms_dof', value: '2 x 7' },
+      { fieldKey: 'hands_dof', value: '2 x4' },
+      { fieldKey: 'torso_dof', value: '1' },
+      { fieldKey: 'lower_body_dof', value: '4' },
+      { fieldKey: 'navigation_max', value: '1' },
+      { fieldKey: 'runtime', value: '4' },
+      { fieldKey: 'charge_time', value: '1' },
+      { fieldKey: 'hand_ip', value: 'IP67' },
+      { fieldKey: 'lower_arm_ip', value: 'IP66' },
+    ],
+  },
+  // Unitree G1
+  {
+    name: 'G1',
+    nameEn: 'G1',
+    brand: 'Unitree',
+    model: 'G1',
+    slug: 'unitree-g1',
+    status: 'published',
+    params: [
+      { fieldKey: 'height', value: '1.7' },
+      { fieldKey: 'weight', value: '170' },
+      { fieldKey: 'horizontal_reach', value: '0.8' },
+      { fieldKey: 'vertical_reach', value: '2.1' },
+      { fieldKey: 'arms_dof', value: '2 x 7' },
+      { fieldKey: 'hands_dof', value: '2 x4' },
+      { fieldKey: 'torso_dof', value: '1' },
+      { fieldKey: 'lower_body_dof', value: '4' },
+      { fieldKey: 'navigation_max', value: '1' },
+      { fieldKey: 'runtime', value: '4' },
+      { fieldKey: 'charge_time', value: '1' },
+      { fieldKey: 'hand_ip', value: 'IP67' },
+      { fieldKey: 'lower_arm_ip', value: 'IP66' },
+    ],
+  },
+  // Xpeng Iron
+  {
+    name: 'Iron',
+    nameEn: 'Iron',
+    brand: 'Xpeng',
+    model: 'Iron',
+    slug: 'xpeng-iron',
+    status: 'published',
+    params: [
+      { fieldKey: 'height', value: '1.7' },
+      { fieldKey: 'weight', value: '170' },
+      { fieldKey: 'horizontal_reach', value: '0.8' },
+      { fieldKey: 'vertical_reach', value: '2.1' },
+      { fieldKey: 'arms_dof', value: '2 x 7' },
+      { fieldKey: 'hands_dof', value: '2 x4' },
+      { fieldKey: 'torso_dof', value: '1' },
+      { fieldKey: 'lower_body_dof', value: '4' },
+      { fieldKey: 'navigation_max', value: '1' },
+      { fieldKey: 'runtime', value: '4' },
+      { fieldKey: 'charge_time', value: '1' },
+      { fieldKey: 'hand_ip', value: 'IP67' },
+      { fieldKey: 'lower_arm_ip', value: 'IP66' },
+    ],
+  },
+]
+
+// Product Schema
+const ProductImageSchema = new mongoose.Schema({
+  url: String,
+  caption: String,
+  captionEn: String,
+  type: { type: String, enum: ['main', 'detail', 'gallery'] },
+  order: Number,
+})
+
+const ProductParamSchema = new mongoose.Schema({
+  fieldKey: String,
+  value: mongoose.Schema.Types.Mixed,
+})
+
+const ProductSchema = new mongoose.Schema({
+  categoryId: String,
+  name: String,
+  nameEn: String,
+  brand: String,
+  model: String,
+  slug: { type: String, unique: true },
+  mainImage: String,
+  images: [ProductImageSchema],
+  params: [ProductParamSchema],
+  status: { type: String, enum: ['draft', 'pending', 'published', 'archived'], default: 'draft' },
+  sourceUrl: String,
+  price: Number,
+  priceUnit: String,
+  releaseDate: Date,
+  viewCount: { type: Number, default: 0 },
+  compareCount: { type: Number, default: 0 },
+  createdBy: String,
+}, { timestamps: true })
+
 async function seed() {
   try {
     console.log('连接数据库...')
@@ -259,11 +427,13 @@ async function seed() {
     // 获取或创建模型
     const Category = mongoose.models.Category || mongoose.model('Category', CategorySchema)
     const Template = mongoose.models.Template || mongoose.model('Template', TemplateSchema)
+    const Product = mongoose.models.Product || mongoose.model('Product', ProductSchema)
 
-    // 清空现有数据（可选）
-    console.log('清空现有品类和模板数据...')
+    // 清空现有数据
+    console.log('清空现有数据...')
     await Category.deleteMany({})
     await Template.deleteMany({})
+    await Product.deleteMany({})
 
     // 插入品类
     console.log('插入品类数据...')
@@ -280,17 +450,35 @@ async function seed() {
     console.log('插入模板数据...')
     const templates = [
       { ...humanoidTemplate, categoryId: categoryMap['humanoid'] },
-      { ...quadrupedTemplate, categoryId: categoryMap['quadruped'] },
-      { ...dexterousHandTemplate, categoryId: categoryMap['dexterous-hand'] },
+      { ...dogTemplate, categoryId: categoryMap['dog'] },
     ]
 
     const insertedTemplates = await Template.insertMany(templates)
     console.log(`成功插入 ${insertedTemplates.length} 个模板`)
 
+    // 插入示例产品
+    console.log('插入示例产品数据...')
+    const productsWithCategory = sampleProducts.map(p => ({
+      ...p,
+      categoryId: categoryMap['humanoid'],
+    }))
+    const insertedProducts = await Product.insertMany(productsWithCategory)
+    console.log(`成功插入 ${insertedProducts.length} 个产品`)
+
+    // 更新品类的产品数量
+    await Category.updateOne(
+      { slug: 'humanoid' },
+      { $set: { productCount: insertedProducts.length } }
+    )
+
     console.log('\n种子数据初始化完成！')
     console.log('品类:')
     for (const cat of insertedCategories) {
       console.log(`  - ${cat.name} (${cat.slug})`)
+    }
+    console.log('\n产品:')
+    for (const prod of insertedProducts) {
+      console.log(`  - ${prod.brand} ${prod.model}`)
     }
   } catch (error) {
     console.error('种子数据初始化失败:', error)

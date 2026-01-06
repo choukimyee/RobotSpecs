@@ -144,4 +144,37 @@
       grid-template-columns: repeat(5, minmax(0, 1fr));
     }
   }
+
+  /* Compare page specific styles */
+  .compare-header {
+    @apply text-2xl font-light tracking-tight;
+  }
+
+  .compare-group-title {
+    @apply text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2;
+  }
+
+  .compare-param-label {
+    @apply text-sm font-medium text-gray-900 dark:text-white whitespace-nowrap;
+  }
+
+  .compare-param-value {
+    @apply text-sm text-gray-700 dark:text-gray-300;
+  }
+
+  .compare-selector {
+    @apply flex items-center justify-between rounded-md border border-gray-200 px-3 py-2 text-sm hover:border-gray-300 transition-colors;
+  }
+
+  .compare-dropdown {
+    @apply absolute left-0 top-full z-50 mt-1 w-full rounded-md border border-gray-200 bg-white shadow-lg overflow-hidden;
+  }
+
+  .compare-dropdown-item {
+    @apply block w-full px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors;
+  }
+
+  .compare-image-placeholder {
+    @apply flex aspect-square w-full items-center justify-center rounded-lg border-2 border-dashed border-gray-200 text-gray-300;
+  }
 }

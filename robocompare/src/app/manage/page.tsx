@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation'
 import dbConnect from '@/lib/db'
 import { Category } from '@/models'
 
-// 首页重定向到第一个品类的对比页面
+// 管理页面重定向到第一个品类
 async function getFirstCategory() {
   try {
     await dbConnect()
@@ -13,13 +13,13 @@ async function getFirstCategory() {
   }
 }
 
-export default async function HomePage() {
+export default async function ManagePage() {
   const firstCategorySlug = await getFirstCategory()
   
   if (firstCategorySlug) {
-    redirect(`/compare/${firstCategorySlug}`)
+    redirect(`/manage/${firstCategorySlug}`)
   }
   
-  // 如果没有品类，显示欢迎页面
-  redirect('/welcome')
+  // 如果没有品类，跳转到管理后台
+  redirect('/admin/categories')
 }
