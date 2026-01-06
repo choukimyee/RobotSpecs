@@ -171,6 +171,15 @@ robocompare/
 - [ ] 图片上传（OSS）
 - [ ] SEO 优化
 
+## 📊 示例数据
+
+项目包含示例 CSV 文件 `/public/sample-products.csv`，可用于测试导入功能。
+
+CSV 文件格式说明：
+- 必需列：`name`, `brand`, `model`
+- 可选列：`nameEn`, `mainImage`, `price`, `priceUnit`, `releaseDate`, `sourceUrl`
+- 参数列：根据模板定义的字段 key 添加，如 `height`, `weight`, `total_dof` 等
+
 ## 📄 许可证
 
 MIT License
