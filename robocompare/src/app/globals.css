@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 255 255 255;
+    --foreground: 29 29 31;
+  }
+
+  .dark {
+    --background: 29 29 31;
+    --foreground: 255 255 255;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-gray-900 antialiased dark:bg-gray-900 dark:text-gray-100;
+  }
+
+  * {
+    @apply border-gray-200 dark:border-gray-700;
+  }
+}
+
+@layer components {
+  /* Custom scrollbar */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.gray.300') transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: theme('colors.gray.300');
+    border-radius: 3px;
+  }
+
+  .dark .scrollbar-thin {
+    scrollbar-color: theme('colors.gray.600') transparent;
+  }
+
+  .dark .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: theme('colors.gray.600');
+  }
+
+  /* Product card hover effect */
+  .product-card {
+    @apply transition-all duration-300;
+  }
+
+  .product-card:hover {
+    @apply -translate-y-1 shadow-medium;
+  }
+
+  /* Comparison table */
+  .compare-table {
+    @apply w-full border-collapse;
+  }
+
+  .compare-table th,
+  .compare-table td {
+    @apply border-b border-gray-100 px-4 py-3 text-left dark:border-gray-800;
+  }
+
+  .compare-table th {
+    @apply bg-gray-50 font-semibold dark:bg-gray-800;
+  }
+
+  .compare-cell-best {
+    @apply bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-400;
+  }
+
+  .compare-cell-worst {
+    @apply bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400;
+  }
+
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(10px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Grid for product list */
+  .product-grid {
+    @apply grid gap-6;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 768px) {
+    .product-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .product-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .product-grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+
+  /* Compare page specific styles */
+  .compare-header {
+    @apply text-2xl font-light tracking-tight;
+  }
+
+  .compare-group-title {
+    @apply text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2;
+  }
+
+  .compare-param-label {
+    @apply text-sm font-medium text-gray-900 dark:text-white whitespace-nowrap;
+  }
+
+  .compare-param-value {
+    @apply text-sm text-gray-700 dark:text-gray-300;
+  }
+
+  .compare-selector {
+    @apply flex items-center justify-between rounded-md border border-gray-200 px-3 py-2 text-sm hover:border-gray-300 transition-colors;
+  }
+
+  .compare-dropdown {
+    @apply absolute left-0 top-full z-50 mt-1 w-full rounded-md border border-gray-200 bg-white shadow-lg overflow-hidden;
+  }
+
+  .compare-dropdown-item {
+    @apply block w-full px-3 py-2 text-left text-sm hover:bg-gray-50 transition-colors;
+  }
+
+  .compare-image-placeholder {
+    @apply flex aspect-square w-full items-center justify-center rounded-lg border-2 border-dashed border-gray-200 text-gray-300;
+  }
+}
